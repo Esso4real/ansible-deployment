@@ -4,13 +4,7 @@ pipeline {
     environment {
         ANSIBLE_SERVER = "10.0.0.195"
     }
-    stages {  
-        stage('Build') {
-            steps {
-                // Get some code from a GitHub repository
-                //git 'https://github.com/Esso4real/ansible-deployment.git'
-            }
-        }       
+    stages {         
        stage("copy files to ansible server") {
            steps {
                script{
@@ -20,6 +14,7 @@ pipeline {
 
                       withCredentials([sshUserPrivateKey(credentialsId: 'ansible-sever-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]){
                        sh 'scp $keyfile ec2-user@$ANSIBLE_SERVER:/ssh-key.pem'
+
                         } 
                     }
                 }
