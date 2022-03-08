@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ANSIBLE_SERVER = "18.218.171.120"
+        ANSIBLE_SERVER = "10.0.0.195"
     }
     stages {  
         stage('Build') {
