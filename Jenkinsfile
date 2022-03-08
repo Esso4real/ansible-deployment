@@ -10,15 +10,15 @@ pipeline {
                script{
                    echo "copying files to ansible control node"
                    sshagent(['ansible-server-key']) {
-                      sh "scp -o StrictHostKeyChecking=no ansible/* eawangya@${ANSIBLE_SERVER}:/home/eawangya"
+                      sh "scp -o StrictHostKeyChecking=no ansible/* eawangya@${ANSIBLE_SERVER}:/home/eawangya/Desktop"
 
-                      withCredentials([sshUserPrivateKey(credentialsId: 'aws-ec2sever-key', keyFileVariable: 'keyfile', usernameVariable: 'user')])
+                      withCredentials([sshUserPrivateKey(credentialsId: 'aws-ec2sever-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]){
                        sh 'scp $keyfile eawangya@$ANSIBLE_SERVER:/home/eawangya/Desktop/ssh-key.pem'
                     } 
                }
            }
        }
-
+       }
        //trigger ansible
        }             
         
