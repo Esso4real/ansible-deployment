@@ -22,6 +22,17 @@
       name: docker 
       state: started
 
+- name: Adding ec2-user to docker group
+  hosts: all
+  become: true
+  tasks:
+  - name: adding existing user user to group docker
+    user:
+     name: ec2-user
+     groups: docker
+     append: yes
+   
+
 - name: change sock perm
   hosts: all
   become: true
