@@ -20,7 +20,7 @@
   - name: Starting docker daemond
     systemd: 
       name: docker 
-      state: stated
+      state: started
 
 - name: change sock perm
   hosts: all
