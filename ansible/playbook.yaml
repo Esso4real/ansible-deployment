@@ -1,6 +1,6 @@
 ---
 - name: Installing python3 and docker
-  hosts: all
+  hosts: worker
   become: true
   tasks:
     - name: Installing python3 and docker
@@ -10,8 +10,8 @@
         name:
           - python3
           - docker
-      update_cache: yes
-      state: present
+        update_cache: yes
+        state: present
 
 - name: start docker daemond
   hosts: all
@@ -23,7 +23,7 @@
         state: stated
 
 - name: Adding ec2-user to docker group
-  hosts: all
+  hosts: worker
   become: true
   tasks:
     - name: Adding ec2-user to docker group
