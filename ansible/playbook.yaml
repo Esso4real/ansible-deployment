@@ -1,6 +1,6 @@
 ---
 - name: Installing python3 and docker
-  hosts: all
+  hosts: worker
   become: yes
   tasks:
   - name: Installing python3 and docker
@@ -14,7 +14,7 @@
       state: present
 
 - name: start docker daemond
-  hosts: all
+  hosts: worker
   become: true
   tasks:
   - name: Starting docker daemond
@@ -23,7 +23,7 @@
       state: started
 
 - name: change sock perm
-  hosts: all
+  hosts: worker
   become: true
   tasks:
   - name: change sock perm
@@ -31,8 +31,8 @@
 
 
 - name: Running docker image
-  hosts: all
+  hosts: worker
   become: true
   tasks:
   - name: Running docker image
-    command: docker run -d -p 8080:8080 esso4real/python-app              
+    command: docker run -d -p 5000:5000 esso4real/python-app:v1              
