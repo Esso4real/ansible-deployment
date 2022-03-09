@@ -22,16 +22,13 @@
       name: docker 
       state: stated
 
-- name: Adding ec2-user to docker group
+- name: change sock perm
   hosts: all
   become: true
   tasks:
-  - name: Adding ec2-user to docker group
-    user: ec2-user
-    groups: docker
-    append: yes
-  - name: Restart and reconnect session
-    meta: reset_connection
+  - name: change sock perm
+    command: chmod 666 /var/run/docker.sock                    
+
 
 - name: Running docker image
   hosts: all
