@@ -1,6 +1,6 @@
 ---
 - name: Installing python3 and docker
-  hosts: worker
+  hosts: all
   become: yes
   tasks:
   - name: Installing python3 and docker
@@ -14,7 +14,7 @@
       state: present
 
 - name: start docker daemond
-  hosts: worker
+  hosts: all
   become: true
   tasks:
   - name: Starting docker daemond
@@ -23,7 +23,7 @@
       state: started
 
 - name: change sock perm
-  hosts: worker
+  hosts: all
   become: true
   tasks:
   - name: change sock perm
@@ -31,7 +31,7 @@
 
 
 - name: Running docker image
-  hosts: worker
+  hosts: all
   become: true
   tasks:
   - name: Running docker image
