@@ -1,21 +1,42 @@
-stage("Execute ansible playbook on target server"){
-            steps{
-                script {
-                    echo "Calling playbook to configure target environment"
-                    //need to install another plugin which will ebables us to exec cmdline cmds on remote servers
-                    //install ssh pipeline steps plugin
-                         def remote = [:]
-                         remote.name = "ansible-server"
-                         remote.host = "${ANSIBLE_SERVER}"
-                         remote.allowAnyHosts = true
+---
+- name: Installing python3 and docker
+  hosts: all
+  become: yes
+  tasks:
+  - name: Installing python3 and docker
+    vars:
+      ansible_python_interpreter: /usr/bin/python
+    yum:
+      name:
+        - python3
+        - docker
+      update_cache: yes
+      state: present
 
-                         withCredentials([sshUserPrivateKey(credentialsId: 'ec2-server-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]){
-                         remote.user = user
-                         remote.identityFile = keyfile
-                         sshCommand remote: remote, command: "ansible-playbook playbook.yaml"  
-                         }
-                         
+- name: start docker daemond
+  hosts: all
+  become: true
+  tasks:
+  - name: Starting docker daemond
+    systemd: 
+      name: docker 
+      state: stated
 
-                }
-            }
-        }
+- name: Adding ec2-user to docker group
+  hosts: all
+  become: true
+  tasks:
+  - name: Adding ec2-user to docker group
+    user: ec2-user
+    groups: docker
+    append: yes
+  - name: Restart and reconnect session
+    meta: reset_connection
+
+- name: Running docker image
+  hosts: all
+  become: true
+  tasks:
+  - name: Running docker image
+    command: docker run -d -p 8080:8080 esso4real/python-app              
+        

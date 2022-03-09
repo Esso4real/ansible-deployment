@@ -1,47 +1,25 @@
---- 
-- 
-  become: true
+---
+- name: Install nginx
   hosts: all
-  name: "Installing python3 and docker"
-  tasks: 
-    - 
-      name: "Installing python3 and docker"
-      vars: 
-        ansible_python_interpreter: /usr/bin/python
-      yum: 
-        name: 
-          - python3
-          - docker
-        state: present
-        update_cache: true
-- 
   become: true
-  hosts: all
-  name: "start docker daemond"
-  tasks: 
-    - 
-      name: "Starting docker daemond"
-      systemd: 
-        name: docker
-        state: stated
-- 
-  become: true
-  hosts: all
-  name: "Adding ec2-user to docker group"
-  tasks: 
-    - 
-      append: true
-      groups: docker
-      name: "Adding ec2-user to docker group"
-      user: ec2-user
-    - 
-      meta: reset_connection
-      name: "Restart and reconnect session"
-- 
-  become: true
-  hosts: all
-  name: "Running docker image"
-  tasks: 
-    - 
-      command: "docker run -d -p 8080:8080 esso4real/python-app"
-      name: "Running docker image"
+
+  tasks:
+  - name: Add epel-release repo
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install nginx
+    yum:
+      name: nginx
+      state: present
+
+  - name: Insert Index Page
+    template:
+      src: index.html
+      dest: /usr/share/nginx/html/index.html
+
+  - name: Start NGiNX
+    service:
+      name: nginx
+      state: started
