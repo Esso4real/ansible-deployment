@@ -1,6 +1,4 @@
 #!/bin/bash
-
-sudo yum install curl
  
 DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 mkdir -p $DOCKER_CONFIG/cli-plugins
