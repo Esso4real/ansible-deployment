@@ -32,15 +32,6 @@
      groups: docker
      append: yes
    
-
-- name: change sock perm
-  hosts: all
-  become: true
-  tasks:
-  - name: change sock perm
-    command: chmod 666 /var/run/docker.sock                    
-
-
 - name: Running docker image
   hosts: all
   become: true
