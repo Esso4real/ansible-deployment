@@ -1,5 +1,5 @@
 [all]
-3.91.208.237
+100.27.20.2
 
 [all.vars]
 ansible_ssh_private_key_file = ~/Downloads/rserver-key.pem
