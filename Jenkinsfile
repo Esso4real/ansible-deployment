@@ -37,7 +37,7 @@ pipeline {
                          sshCommand remote: remote, command: "ansible-playbook playbook.yaml"
                          sshCommand remote: remote, command: "chmod +x docker-compose.sh"
                           sshCommand remote: remote, command: "bash docker-compose.sh"   
-                         sshCommand remote: remote, command: "docker compose -f docker-compose.yaml up"  
+                         sshCommand remote: remote, command: "docker-compose -f docker-compose.yaml up"  
                          }
                          
 
