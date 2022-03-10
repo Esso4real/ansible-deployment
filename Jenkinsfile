@@ -33,8 +33,10 @@ pipeline {
                          withCredentials([sshUserPrivateKey(credentialsId: 'ec2-server-key', keyFileVariable: 'keyfile', usernameVariable: 'user')]){
                          remote.user = user
                          remote.identityFile = keyfile
-                         sshScript remote: remote, script: "docker-compose.sh"
-                         sshCommand remote: remote, command: "ansible-playbook playbook.yaml" 
+        
+                         sshCommand remote: remote, command: "ansible-playbook playbook.yaml"
+                         sshCommand remote: remote, command: "chmod +x docker-compose.sh"
+                          sshCommand remote: remote, command: "bash docker-compose.sh"   
                          sshCommand remote: remote, command: "docker compose up -d"  
                          }
                          
